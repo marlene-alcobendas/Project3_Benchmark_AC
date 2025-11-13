@@ -1,0 +1,95 @@
+# =============================
+# Python / Data Science Project .gitignore
+# Generated on 2025-11-11
+# =============================
+
+# --- OS & Editor metadata ---
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+.DS_Store
+.vscode/
+
+# --- Python cache/build artifacts ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.pyc
+*.so
+build/
+dist/
+*.egg-info/
+*.egg
+
+# --- Virtual environments ---
+.venv/
+venv/
+ENV/
+env/
+.env/
+
+# --- Jupyter & IPython ---
+.ipynb_checkpoints/
+profile_default/
+ipython_config.py
+
+# Optionally ignore notebook output diffs (uncomment if using strip tools)
+# *.ipynb
+
+# --- Logs & diagnostics ---
+*.log
+logs/
+
+# --- Environment & secrets ---
+.python-version
+*.env
+*.secret
+*.key
+*.pem
+
+# --- Tools / Packaging ---
+pip-wheel-metadata/
+.mypy_cache/
+.pytest_cache/
+.coverage
+coverage.xml
+htmlcov/
+.tox/
+.ruff_cache/
+
+# --- Data caches (allow raw CSVs to be tracked) ---
+*.sqlite3
+*.db
+cache/
+data/tmp/
+
+# --- HTML artifacts cache ---
+asn_cache/
+
+# --- Images / Figures generated ---
+figures/
+reports/
+
+# --- OS specific temp files ---
+*$RECYCLE.BIN/
+*.swp
+*.swo
+~$*
+
+# --- Node / Frontend (if later added) ---
+node_modules/
+*.tsbuildinfo
+
+# --- VS Code workspace settings (keep user-specific) ---
+*.code-workspace
+
+# --- Ignore large exports ---
+exports/
+out/
+
+# --- Exceptions: Keep CSV datasets ---
+!*.csv
+
+# End of file
+
