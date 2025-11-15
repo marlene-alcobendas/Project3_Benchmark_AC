@@ -1,72 +1,111 @@
-# Benchmark of Aircraft: Safety & Fleet Analysis
+# Engines Safety in Western Commercial Aviation (2000--2025)
 
-## 📌 Introduction
-This project provides a comprehensive benchmark of aircraft manufacturers, engine manufacturers and operator fleets worldwide.  
-By integrating Aircraft Worldwide (AW) fleet data with Aviation Safety Network (ASN) engine-related events, the goal is to understand patterns in fleet composition, manufacturer combinations and engine safety performance.
+## 1. Introduction
 
-## 📂 Data Sources
+This project analyses the safety of aircraft engines used in western
+commercial aviation over the last 25 years. The study combines multiple
+fleet databases with web‑scraped incident records, merging them into a
+unified analytical dataset to evaluate patterns, frequencies and risk
+indicators related to engine failures.
 
-### 1. Aircraft Worldwide (AW) Dataset
-Contains global aircraft fleet information including registration, operator, manufacturer, engine manufacturer and country codes.
+The scope was adapted during the project due to access limitations to
+proprietary flight information databases. The team pivoted from a maintenance
+benchmark to a safety‑focused study using publicly accessible sources.
 
-**Strengths**
-- High granularity  
-- Strong coverage of fleet data  
+## 2. Data Sources
 
-**Weaknesses / Challenges**
-- Inconsistent formats  
-- Missing values  
-- Duplicates  
+### Fleet & Aircraft Data
 
-### 2. Aviation Safety Network (ASN)
-Engine-related events dataset requiring keyword filtering and date normalization.
+-   **9 independent CSV files** consolidated into a single DataFrame\
+-   Included variables: aircraft model, engine manufacturer, operator,
+    country, delivery year, age, status.
 
-## ❓ Questions to Answer
+### Incident Data (Web Scraping)
 
-### A. Fleet Composition & Structure
-1. Which countries operate the largest fleets?  
-**Conclusion:** Fleet size correlates with economic development and airline presence.
+-   Source: **Aviation Safety Network (ASN)**\
+-   Scraped yearly engine‑related incidents for the last 25 years\
+-   Extracted: date, aircraft registration, aircraft type, engine info,
+    incident classification
 
-2. Top aircraft–engine manufacturer combinations by country.  
-**Conclusion:** Regional preferences appear clearly.
+### Comments on the Data
 
-### B. Engine Safety Analysis
-3. Percentage of each engine manufacturer’s fleet in ASN events.  
-**Conclusion:** Very low ratios (<1%), confirming engine reliability.
+**Strengths** 
+- Large historical window (2000--2025)
+- Real incidents directly tied to individual aircraft
+- Cross‑referencing by aircraft registration increases accuracy
 
-4. Are some models overrepresented?  
-**Conclusion:** No anomalies beyond fleet-size correlation.
+**Challenges & Weaknesses** 
+- Inconsistent aircraft registration formats
+- Country names not standardized (manual ISO corrections)
+- Missing delivery years
+- Unstructured incident descriptions
+- Web scraping limitations & dynamic pages
 
-### C. Country Safety Patterns
-5. Countries with higher proportions of ASN-linked aircraft.  
-**Conclusion:** Patterns reflect fleet age or traffic volume.
+## 3. Questions to Answer
 
-## ⚙️ Methodology
+### Fleet Structure & Evolution
 
-### 1. Data Loading
-- CSV/JSONL import  
-- Separator checks  
-- Encoding fixes  
+-   How has the western fleet evolved?
+-   What patterns appear during major events like COVID‑19?
 
-### 2. Cleaning
-- Text normalization  
-- Manufacturer mappings  
-- Duplicate removal  
-- Date parsing  
-- Creation of `year` column  
+**Conclusion:**\
+Deliveries reduced during COVID‑19, Boeing showed a significant decline
+in 2019--2020 following the 737 MAX grounding.
 
-### 3. Merging
-- Normalized registrations  
-- Left join AW ↔ ASN  
-- Created `asn_engine_flag`  
+### Engine Safety
 
-### 4. Analysis
-- Groupbys  
-- Percentages & ratios  
-- Plotly geo-scatter, bar charts and combinations plots  
+-   What % of the active fleet experienced an engine‑related failure?
+-   Are certain engine manufacturers associated with higher incident
+    rates?
+-   Are specific aircraft models over‑represented?
 
-## 📊 Conclusions
-- Engine-related events are extremely rare globally  
-- No manufacturer shows abnormal incident rates  
-- Most differences reflect fleet size or operational density  
-- Text normalization was the biggest challenge  
+**Conclusion:**\
+The percentage of aircraft with recorded engine‑failure incidents is
+small compared with total fleet volume, but differences between
+manufacturers are visible when normalized.
+
+
+## 4. Methodology
+
+### 4.1 Data Wrangling & Cleaning
+
+-   **Merge of 9 CSV files**
+-   **Standardized ISO‑3 country codes**
+-   **Missing delivery years:** imputed as *current year -- aircraft age*
+-   **Normalization of engine manufacturers:** reduced to 4 canonical suppliers
+-   **Created dataset of in‑service aircraft only**
+
+### 4.2 Web Scraping Pipeline
+
+-   Iterated through incident listing pages\
+-   Saved raw pages into **JSON cache**\
+-   Converted JSON to pandas DataFrame\
+-   Normalized date formats and extracted year column\
+-   Standardized aircraft registrations to match fleet database\
+-   Inner-joined incidents to fleet data on registration (primary key)
+
+### 4.3 Exploratory Data Analysis
+
+-   Engines vs incidents (2000--2025)\
+-   Fleet age distribution\
+-   Deliveries per year\
+-   Trends per OEM (Boeing vs Airbus)\
+-   Breakdown of incidents per engine manufacturer
+
+## 5. Conclusions & Insights
+
+-   The % of the active fleet with at least one engine‑failure incident
+    remains low overall.\
+-   Normalization per manufacturer reveals significant differences in
+    exposure and reliability perception.\
+-   Boeing's deliveries were strongly affected by COVID‑19 and the 737
+    MAX crisis, while Airbus maintained stable growth.\
+-   Web‑scraped incident data effectively complements fleet databases
+    when proprietary data is not accessible.\
+-   The project demonstrates the complexity of consolidating
+    heterogeneous aviation datasets at registration level.
+
+------------------------------------------------------------------------
+
+**Authors:**\
+Marlene Alcobendas & Iván Prieto
